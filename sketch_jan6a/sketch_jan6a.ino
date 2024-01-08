@@ -14,7 +14,7 @@ int buz = 4;
 long duration;
 int distance;
 const int trig = 9;
-const int echo = 10;
+const int echo = 8;
    
 void setup() {
   //L298
@@ -55,7 +55,7 @@ void startMovingForward(){
     digitalWrite(buz, LOW);
 }
 
-void MovingBackward(){
+void movingBackward(){
 
   for (int i = 50 ; i<=300 ; ++i){
     digitalWrite(enA, LOW);  
@@ -71,7 +71,6 @@ void MovingBackward(){
    analogWrite(pwmB, 50);
 
   digitalWrite(buz, LOW);
-  delay(1000);
   
 }
 
@@ -98,6 +97,8 @@ void movingLeft(){
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
+    digitalWrite(buz, HIGH);
+
 
   }
    digitalWrite(enA, HIGH);  
@@ -117,6 +118,8 @@ void movingRight(){
     digitalWrite(enB, HIGH);
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
+    digitalWrite(buz, HIGH);
+
     delay(10);
 
   }
@@ -145,10 +148,20 @@ int calculateDistance(){
 
 
 
-
+bool turningBlock = 0;
 void loop() {
   distance = calculateDistance();
   Serial.println(distance); 
 
+  if (distance <= 5 && turningBlock == 0){
+    turningBlock = 1;
+    machineStopping();
+    movingBackward();
+    movingLeft();
+  }
+  else {
+    turningBlock = 0;
+    startMovingForward();
+  }
 
 }
