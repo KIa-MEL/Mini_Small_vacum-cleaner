@@ -1,0 +1,35 @@
+
+{% load static %}
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Kianoosh Online LED Control</title>
+</head>
+<body>
+
+    <header>
+        <h1>Kianoosh Online LED Control</h1>
+    </header>
+
+    <main>
+        <h1>LUMP IS OFF</h1>
+        <button onclick="back()">Back</button>
+
+    </main>
+
+    <footer>
+        &copy; 2023 Kianoosh Online LED Control
+    </footer>
+
+    <script>
+        function back() {
+            window.location.href = "../";
+        }
+
+    </script>
+</body>
+</html>
