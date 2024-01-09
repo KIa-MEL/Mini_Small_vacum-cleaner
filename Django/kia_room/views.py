@@ -4,20 +4,20 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
 
-def on(request):
-    file = default_storage.open('/status.txt' , 'wb')
-    file.write('on')
+def hc05(request , hc05_str):
+    file = default_storage.open('/hc05_status.txt' , 'wb')
+    file.write(hc05_str)
     file.close()
-    return render(request, 'on.html')
-
+    return render(request, 'tempreture.html')
+    
 def off(request):
     file = default_storage.open('/status.txt' , 'wb')
     file.write('off')
     file.close()
     return render(request, 'off.html')
 
-def status(request):
-    file = default_storage.open('/status.txt' , 'rb')
+def hc05_status(request):
+    file = default_storage.open('/hc05_status.txt' , 'rb')
     return HttpResponse(file.read())
 
 def index(request):
