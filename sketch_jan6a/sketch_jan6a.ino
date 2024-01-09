@@ -15,6 +15,15 @@ long duration;
 int distance;
 const int trig = 9;
 const int echo = 8;
+
+
+const int sensor1 = 2;
+const int sensor2 = 3;
+const int sensor3 = 5;
+const int sensor4 = 6;
+int val = 0;
+
+
    
 void setup() {
   //L298
@@ -24,10 +33,19 @@ void setup() {
   pinMode(enB, OUTPUT);
   pinMode(buz, OUTPUT);
 
+
+  pinMode(sensor1, INPUT);
+  pinMode(sensor2, INPUT);
+  pinMode(sensor3, INPUT);
+  pinMode(sensor4, INPUT);
+
   //ULTRA SONIC
   pinMode(trig, OUTPUT); // Sets the trigPin as an Output
   pinMode(echo, INPUT); // Sets the echoPin as an Input
   Serial.begin(9600); // Starts the serial communication
+
+
+
 }
 
 
@@ -146,7 +164,13 @@ int calculateDistance(){
   return distance;
 }
 
+//INFRARED MODULE =============
 
+
+int sensor1Val = 0;
+int sensor2Val = 0;
+int sensor3Val = 0;
+int sensor4Val = 0;
 
 bool turningBlock = 0;
 void loop() {
@@ -163,5 +187,17 @@ void loop() {
     turningBlock = 0;
     startMovingForward();
   }
+
+  // sensor1Val = digitalRead(sensor1);
+  // sensor2Val = digitalRead(sensor2);
+  // sensor3Val = digitalRead(sensor3);
+  // sensor4Val = digitalRead(sensor4);
+
+  //Serial.println(sensor3Val);
+  // Serial.println(sensor2Val);
+  // Serial.println(sensor3Val);
+  // Serial.println(sensor4Val);
+  //delay(1000);
+
 
 }
