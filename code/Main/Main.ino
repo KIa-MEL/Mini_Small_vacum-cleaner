@@ -15,13 +15,6 @@ int buz = 4;
 
 long duration;
 int distance;
-<<<<<<< HEAD:code/sketch_jan6a/sketch_jan6a.ino
-#define trig A2
-#define echo A1
-=======
-const int trig = 9;
-const int echo = 8;
-
 
 const int sensor1 = 2;
 const int sensor2 = 3;
@@ -29,8 +22,8 @@ const int sensor3 = 5;
 const int sensor4 = 6;
 int val = 0;
 
-
->>>>>>> 7b78983d5c59c66e5670d205119b54027f2f426b:sketch_jan6a/sketch_jan6a.ino
+#define trig A2
+#define echo A1
    
 void setup() {
   //L298
@@ -124,9 +117,7 @@ void movingLeft(){
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
-<<<<<<< HEAD:code/sketch_jan6a/sketch_jan6a.ino
     // digitalWrite(buz, HIGH);
-=======
     if (sound <= 10){
       digitalWrite(buz, HIGH);
     }else {
@@ -134,7 +125,6 @@ void movingLeft(){
     }
 
     ++sound;
->>>>>>> 7b78983d5c59c66e5670d205119b54027f2f426b:sketch_jan6a/sketch_jan6a.ino
 
 
   }
