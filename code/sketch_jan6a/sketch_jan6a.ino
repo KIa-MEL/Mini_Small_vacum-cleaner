@@ -4,6 +4,8 @@
   by Amir Mohammad Shojaee @ Electropeak
   Home<iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);" title="&#8220;Home&#8221; &#8212; Electropeak" src="https://electropeak.com/learn/embed/#?secret=5GQbCuTSNR" data-secret="5GQbCuTSNR" width="600" height="338" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 */
+
+
 int pwmA = 10;
 int pwmB = 11;
 int enA = 12;
@@ -13,6 +15,10 @@ int buz = 4;
 
 long duration;
 int distance;
+<<<<<<< HEAD:code/sketch_jan6a/sketch_jan6a.ino
+#define trig A2
+#define echo A1
+=======
 const int trig = 9;
 const int echo = 8;
 
@@ -24,6 +30,7 @@ const int sensor4 = 6;
 int val = 0;
 
 
+>>>>>>> 7b78983d5c59c66e5670d205119b54027f2f426b:sketch_jan6a/sketch_jan6a.ino
    
 void setup() {
   //L298
@@ -117,6 +124,9 @@ void movingLeft(){
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
+<<<<<<< HEAD:code/sketch_jan6a/sketch_jan6a.ino
+    // digitalWrite(buz, HIGH);
+=======
     if (sound <= 10){
       digitalWrite(buz, HIGH);
     }else {
@@ -124,6 +134,7 @@ void movingLeft(){
     }
 
     ++sound;
+>>>>>>> 7b78983d5c59c66e5670d205119b54027f2f426b:sketch_jan6a/sketch_jan6a.ino
 
 
   }
@@ -132,7 +143,7 @@ void movingLeft(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  digitalWrite(buz, LOW);
+  // digitalWrite(buz, LOW);
   delay(1000);
 
 }
@@ -144,7 +155,7 @@ void movingRight(){
     digitalWrite(enB, HIGH);
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
-    digitalWrite(buz, HIGH);
+    // digitalWrite(buz, HIGH);
 
     delay(10);
 
@@ -154,7 +165,7 @@ void movingRight(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  digitalWrite(buz, LOW);
+  // digitalWrite(buz, LOW);
   delay(1000);
 
 }

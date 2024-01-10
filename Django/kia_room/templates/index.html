@@ -1,0 +1,37 @@
+
+{% load static %}
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Kianoosh Online LED Control</title>
+</head>
+<body>
+
+    <header>
+        <h1>Kianoosh Online LED Control</h1>
+    </header>
+
+    <main>
+        <button onclick="turnOn()">On</button>
+        <button onclick="turnOff()">Off</button>
+    </main>
+
+    <footer>
+        &copy; 2023 Kianoosh Online LED Control
+    </footer>
+
+    <script>
+        function turnOn() {
+            window.location.href = "./on";
+        }
+
+        function turnOff() {
+            window.location.href = "./off";
+        }
+    </script>
+</body>
+</html>
