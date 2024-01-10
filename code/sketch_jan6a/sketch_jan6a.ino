@@ -15,8 +15,8 @@ int buz = 4;
 
 long duration;
 int distance;
-const int trig = 9;
-const int echo = 8;
+#define trig A2
+#define echo A1
    
 void setup() {
   //L298
@@ -99,7 +99,7 @@ void movingLeft(){
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
-    digitalWrite(buz, HIGH);
+    // digitalWrite(buz, HIGH);
 
 
   }
@@ -108,7 +108,7 @@ void movingLeft(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  digitalWrite(buz, LOW);
+  // digitalWrite(buz, LOW);
   delay(1000);
 
 }
@@ -120,7 +120,7 @@ void movingRight(){
     digitalWrite(enB, HIGH);
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
-    digitalWrite(buz, HIGH);
+    // digitalWrite(buz, HIGH);
 
     delay(10);
 
@@ -130,7 +130,7 @@ void movingRight(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  digitalWrite(buz, LOW);
+  // digitalWrite(buz, LOW);
   delay(1000);
 
 }
