@@ -107,15 +107,23 @@ void machineStopping(){
 }
 
 void movingLeft(){
+  int sound = 0 ;
 
   //start 
-  for (int i = 50 ; i<=300 ; ++i){
+  for (int i = 50 ; i<=350 ; ++i){
+
     digitalWrite(enA, HIGH);  
     digitalWrite(enB, LOW);
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
-    digitalWrite(buz, HIGH);
+    if (sound <= 10){
+      digitalWrite(buz, HIGH);
+    }else {
+      digitalWrite(buz, LOW);
+    }
+
+    ++sound;
 
 
   }
@@ -131,7 +139,7 @@ void movingLeft(){
 
 void movingRight(){
    //start 
-  for (int i = 50 ; i<=300 ; ++i){
+  for (int i = 50 ; i<=400 ; ++i){
     digitalWrite(enA, LOW);  
     digitalWrite(enB, HIGH);
     analogWrite(pwmA, i);
