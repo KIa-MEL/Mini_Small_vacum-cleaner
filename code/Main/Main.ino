@@ -1,10 +1,3 @@
-  /*
-  L298P-Motor-Driver-Shield
-  made on 09 Nov 2020
-  by Amir Mohammad Shojaee @ Electropeak
-  Home<iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);" title="&#8220;Home&#8221; &#8212; Electropeak" src="https://electropeak.com/learn/embed/#?secret=5GQbCuTSNR" data-secret="5GQbCuTSNR" width="600" height="338" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-*/
-
 
 int pwmA = 10;
 int pwmB = 11;
@@ -15,6 +8,9 @@ int buz = 4;
 
 long duration;
 int distance;
+const int trig = 9;
+const int echo = 8;
+
 
 const int sensor1 = 2;
 const int sensor2 = 3;
@@ -22,8 +18,7 @@ const int sensor3 = 5;
 const int sensor4 = 6;
 int val = 0;
 
-#define trig A2
-#define echo A1
+
    
 void setup() {
   //L298
@@ -59,7 +54,7 @@ void startMovingForward(){
   stopping = 200;
   if (true){ //starting to move 
 
-    if (forward!= 200){
+    if (forward!= 100){
       ++forward;
     }
 
@@ -73,9 +68,37 @@ void startMovingForward(){
     digitalWrite(buz, LOW);
 }
 
+void startMovingForward2(){
+
+  stopping = 100;
+  if (true){ //starting to move 
+
+    if (forward!= 100){
+      ++forward;
+    }
+
+    digitalWrite(enA, HIGH);  //
+    digitalWrite(enB, HIGH);
+    analogWrite(pwmA, forward);
+    analogWrite(pwmB, forward);
+    delay(10);
+
+  }
+
+  if (digitalRead(sensor4) || (digitalRead(sensor2) || digitalRead(sensor3)) || digitalRead(sensor1)){
+
+    digitalWrite(buz , HIGH);
+    delay(10);
+    digitalWrite(buz , LOW);
+
+
+  }
+}
+
+
 void movingBackward(){
 
-  for (int i = 50 ; i<=300 ; ++i){
+  for (int i = 50 ; i<=100 ; ++i){
     digitalWrite(enA, LOW);  
     digitalWrite(enB, LOW);
     analogWrite(pwmA, i);
@@ -88,7 +111,15 @@ void movingBackward(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  digitalWrite(buz, LOW);
+  
+  if (digitalRead(sensor4) || (digitalRead(sensor2) || digitalRead(sensor3)) || digitalRead(sensor1)){
+
+    digitalWrite(buz , HIGH);
+    delay(10);
+    digitalWrite(buz , LOW);
+
+
+  }
   
 }
 
@@ -106,7 +137,7 @@ void machineStopping(){
     delay(10);
 }
 
-void movingLeft(){
+void movingRight(){
   int sound = 0 ;
 
   //start 
@@ -117,12 +148,11 @@ void movingLeft(){
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
     delay(10);
-    // digitalWrite(buz, HIGH);
-    if (sound <= 10){
-      digitalWrite(buz, HIGH);
-    }else {
-      digitalWrite(buz, LOW);
-    }
+    // if (sound <= 10){
+    //   digitalWrite(buz, HIGH);
+    // }else {
+    //   digitalWrite(buz, LOW);
+    // }
 
     ++sound;
 
@@ -133,19 +163,19 @@ void movingLeft(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  // digitalWrite(buz, LOW);
+  digitalWrite(buz, LOW);
   delay(1000);
 
 }
 
-void movingRight(){
+void movingLeft(){
    //start 
   for (int i = 50 ; i<=400 ; ++i){
     digitalWrite(enA, LOW);  
     digitalWrite(enB, HIGH);
     analogWrite(pwmA, i);
     analogWrite(pwmB, i);
-    // digitalWrite(buz, HIGH);
+    digitalWrite(buz, HIGH);
 
     delay(10);
 
@@ -155,10 +185,48 @@ void movingRight(){
    analogWrite(pwmA, 50);
    analogWrite(pwmB, 50);
 
-  // digitalWrite(buz, LOW);
+  digitalWrite(buz, LOW);
   delay(1000);
 
 }
+
+
+void movingLeftSides(){
+  int n = 50;
+  while (digitalRead(sensor4) && (digitalRead(sensor2) && digitalRead(sensor3)) && !digitalRead(sensor1) ){
+    if (n!= 200){
+      ++n;
+    }
+
+    digitalWrite(enA, LOW);  //
+    digitalWrite(enB, HIGH);
+    analogWrite(pwmA, n);
+    analogWrite(pwmB, n);
+    delay(10);
+
+
+  }
+
+}
+
+void movingRightSides(){
+  int n = 50;
+  while ( digitalRead(sensor1) && (digitalRead(sensor2) && digitalRead(sensor3)) && !digitalRead(sensor4)){
+    if (n!= 200){
+      ++n;
+    }
+
+    digitalWrite(enA, HIGH);  //
+    digitalWrite(enB, LOW);
+    analogWrite(pwmA, n);
+    analogWrite(pwmB, n);
+    delay(10);
+  }
+
+}
+
+
+
 //HC-SR04=====================
 int calculateDistance(){ 
   
@@ -173,6 +241,27 @@ int calculateDistance(){
   return distance;
 }
 
+
+void walkInLine(){
+     if (digitalRead(sensor4) && (digitalRead(sensor2) && digitalRead(sensor3)) && !digitalRead(sensor1)){
+      machineStopping();
+      movingLeftSides(); 
+    }
+    
+    else if (digitalRead(sensor1) && (digitalRead(sensor2) && digitalRead(sensor3)) && !digitalRead(sensor4)){
+      machineStopping();
+      movingRightSides();
+    }
+
+    else if (!digitalRead(sensor4) && (digitalRead(sensor2) && digitalRead(sensor3)) && !digitalRead(sensor1)){
+      startMovingForward();
+    }
+     else {
+      movingBackward();
+    }
+
+}
+
 //INFRARED MODULE =============
 
 
@@ -185,6 +274,7 @@ bool turningBlock = 0;
 void loop() {
   distance = calculateDistance();
   Serial.println(distance); 
+  
 
   if (distance <= 5 && turningBlock == 0){
     turningBlock = 1;
@@ -193,20 +283,12 @@ void loop() {
     movingLeft();
   }
   else {
+    startMovingForward2();
+
     turningBlock = 0;
-    startMovingForward();
+
   }
-
-  // sensor1Val = digitalRead(sensor1);
-  // sensor2Val = digitalRead(sensor2);
-  // sensor3Val = digitalRead(sensor3);
-  // sensor4Val = digitalRead(sensor4);
-
-  //Serial.println(sensor3Val);
-  // Serial.println(sensor2Val);
-  // Serial.println(sensor3Val);
-  // Serial.println(sensor4Val);
-  //delay(1000);
-
+  
+  delay (1000);
 
 }
